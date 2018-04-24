@@ -23,18 +23,23 @@ const boardObj = [];
 
     // Object board
     collectionToArray(boxCollection, boxArray);
-    console.log(boxArray);
 
-    for(var i = 0; i < boxArray.length; i++) {
+    let row = [];
+    
+
+    for(let i = 0; i < boxArray.length; i++) {
+        if(i % 3 == 0) {
+            row[i] =  boxArray.slice(0, 3);
+            console.log(row[i]);
+        }
+
         boardObj[i] = {
             cell: {
                 element: boxArray[i],
                 status: true ? 'yes' : ' ' 
             }
         }
-        boardObj.slice(i % 3 == 0);
     }
-
-    console.log(boardObj);
+    
 }());
 
