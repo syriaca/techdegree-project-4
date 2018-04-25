@@ -1,5 +1,6 @@
-function Player(name, isPlaying) {
+function Player(name, isPlaying, markerType) {
     this.name = name,
-    this.isPlaying = isPlaying
+    this.isPlaying = isPlaying,
+    this.markerType = markerType
 }
 

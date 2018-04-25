@@ -26,17 +26,26 @@ const boardObj = [];
 
     let row = [];
     
+    function test(el) {
+        let testValue = el.classList;
+        switch(testValue) {
+            case "box-filled-1":
+            break;
+            case "box-filled-2":
+            break;
+            default " ":
+            break;
+        }
+        if(el.classList.contains(" ")) {
+            return "empty";
+        }
+    }
 
     for(let i = 0; i < boxArray.length; i++) {
-        if(i % 3 == 0) {
-            row[i] =  boxArray.slice(0, 3);
-            console.log(row[i]);
-        }
-
         boardObj[i] = {
             cell: {
                 element: boxArray[i],
-                status: true ? 'yes' : ' ' 
+                status: test(this.element)
             }
         }
     }
