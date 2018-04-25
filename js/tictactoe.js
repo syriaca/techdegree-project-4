@@ -1,14 +1,22 @@
 const boardScreen = document.getElementById('board');
 const startScreen = document.getElementById('start');
+const player1 = document.getElementById('player1');
+const player2 = document.getElementById('player1');
 const startGameButton = document.querySelector('#start .button')
 const boxes =  document.querySelector('.boxes');
 const box = document.querySelector('.box');
 const boxCollection = document.querySelectorAll('.box');
-let boxArray = [];
 const boardObj = [];
+let boxArray = [];
+
+let board = new Board();
+let playerX = new Player(player1, "Jean-Yves", "X", "box-filled-1", true);
+let playerO = new Player(player2, "Jean-Yves", "O", "box-filled-2", false);
+
+board.addPlayer(playerX);
+board.addPlayer(playerO);
 
 (function(){
-
     // Event listener on document load
     document.addEventListener('DOMContentLoaded', (e) => {
         elementDisplay(startScreen, 'block');
@@ -19,36 +27,12 @@ const boardObj = [];
     startGameButton.addEventListener('click', (e) => {
         elementDisplay(startScreen, 'none');
         elementDisplay(boardScreen, 'block');
-    });
-
-    // Object board
-    collectionToArray(boxCollection, boxArray);
-
-    let row = [];
-    
-    function test(el) {
-        let testValue = el.classList;
-        switch(testValue) {
-            case "box-filled-1":
-            break;
-            case "box-filled-2":
-            break;
-            default " ":
-            break;
-        }
-        if(el.classList.contains(" ")) {
-            return "empty";
-        }
-    }
-
-    for(let i = 0; i < boxArray.length; i++) {
-        boardObj[i] = {
-            cell: {
-                element: boxArray[i],
-                status: test(this.element)
-            }
-        }
-    }
+    });   
     
 }());
 
+for(let i = 0; i < boxCollection.length; i++) {
+    boxCollection[i].addEventListener('mouseover', (e) => {
+        board.checkPlayer(board.players);
+    });
+};
