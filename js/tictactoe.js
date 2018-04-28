@@ -41,6 +41,10 @@ for(let i = 0; i < boxCollection.length; i++) {
         e.target.style.backgroundImage = '';
     });
     boxCollection[i].addEventListener('click', (e) => {
-        board.switchPlayer(players, e);
+        if(!e.target.classList.item(1)){
+            board.switchPlayer(players, e);
+        } else {
+            e.preventDefault();
+        }
     });
 };
