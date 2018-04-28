@@ -51,15 +51,23 @@ Board.prototype.updatePlayers = function() {
     }}
 
 Board.prototype.mouseOver = function(players, e) {
-    let currentPlayer = players[this.currentPlayerIndex];
-    let playerMarker = currentPlayer.markerType;
-    e.target.style.backgroundImage = 'url("img/'+playerMarker+'.svg")';
+    if(!e.target.classList.item(1)) {
+        let currentPlayer = players[this.currentPlayerIndex];
+        let playerMarker = currentPlayer.markerType;
+        e.target.style.backgroundImage = 'url("img/'+playerMarker+'.svg")';
+    }
 };
 
 Board.prototype.switchPlayer = function(players, e) {
+    this.addMark(players, e);
     this.stopPlaying()    
     this.startPlaying();
 };
+
+Board.prototype.addMark = function(players, e) {
+    let currentPlayer = players[this.currentPlayerIndex];
+    e.target.classList.add(currentPlayer.markerClass);
+}
 
 // // Object board
     // collectionToArray(boxCollection, boxArray);
