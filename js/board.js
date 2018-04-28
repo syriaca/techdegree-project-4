@@ -6,31 +6,66 @@
 > isPlaying
 */
 
-/* Board Method 
+/* Board Method
 > Hover
 > Click
 */
 
 function Board() {
     this.players = [];
-    this.actualPlayerIndex = 0;
-}
+    this.currentPlayerIndex = 0;
+};
 
-Board.prototype.addPlayer = function(player){
+Board.prototype.addPlayer = function(player) {
     this.players.push(player);
 };
 
-Board.prototype.checkPlayer = function(players) {
-        if(players[this.actualPlayerIndex].isPlaying === true) {
-            console.log("true");
-        }     
+
+Board.prototype.startPlaying = function(){
+    this.updatePlayers();
+    let currentPlayer = players[this.currentPlayerIndex];
+    currentPlayer.isPlaying = true;
+    currentPlayer.id.classList.add("active");
+
+    console.log("play");
+    console.log(currentPlayer);
 }
+
+Board.prototype.stopPlaying = function(){
+    let currentPlayer = players[this.currentPlayerIndex];
+    currentPlayer.isPlaying = false;
+    if(currentPlayer.id.classList.contains("active")) {
+        currentPlayer.id.classList.remove("active");
+    } else {
+        currentPlayer.id.classList.add("active");
+    }
+
+    console.log("stop");
+    console.log(currentPlayer);
+}
+
+Board.prototype.updatePlayers = function() {
+    this.currentPlayerIndex++;
+    if(this.currentPlayerIndex === this.players.length) {
+        this.currentPlayerIndex = 0;
+    }}
+
+Board.prototype.mouseOver = function(players, e) {
+    let currentPlayer = players[this.currentPlayerIndex];
+    let playerMarker = currentPlayer.markerType;
+    e.target.style.backgroundImage = 'url("img/'+playerMarker+'.svg")';
+};
+
+Board.prototype.switchPlayer = function(players, e) {
+    this.stopPlaying()    
+    this.startPlaying();
+};
 
 // // Object board
     // collectionToArray(boxCollection, boxArray);
 
     // let row = [];
-    
+
     // function test(el) {
     //     let testValue = el.classList;
     //     switch(testValue) {

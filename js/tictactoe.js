@@ -1,7 +1,7 @@
 const boardScreen = document.getElementById('board');
 const startScreen = document.getElementById('start');
 const player1 = document.getElementById('player1');
-const player2 = document.getElementById('player1');
+const player2 = document.getElementById('player2');
 const startGameButton = document.querySelector('#start .button')
 const boxes =  document.querySelector('.boxes');
 const box = document.querySelector('.box');
@@ -10,11 +10,13 @@ const boardObj = [];
 let boxArray = [];
 
 let board = new Board();
-let playerX = new Player(player1, "Jean-Yves", "X", "box-filled-1", true);
-let playerO = new Player(player2, "Jean-Yves", "O", "box-filled-2", false);
+let playerO= new Player(player1, "Jean-Yves", "O", "box-filled-1", true);
+let playerX = new Player(player2, "Théo", "X", "box-filled-2", false);
 
-board.addPlayer(playerX);
 board.addPlayer(playerO);
+board.addPlayer(playerX);
+
+let players = board.players;
 
 (function(){
     // Event listener on document load
@@ -33,6 +35,12 @@ board.addPlayer(playerO);
 
 for(let i = 0; i < boxCollection.length; i++) {
     boxCollection[i].addEventListener('mouseover', (e) => {
-        board.checkPlayer(board.players);
+        board.mouseOver(players, e);
+    });
+    boxCollection[i].addEventListener('mouseout', (e) => {
+        e.target.style.backgroundImage = '';
+    });
+    boxCollection[i].addEventListener('click', (e) => {
+        board.switchPlayer(players, e);
     });
 };

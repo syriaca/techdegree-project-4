@@ -25,7 +25,3 @@ function Player(id, name, markerType, markerClass, isPlaying) {
         this.id.classList.add("active");
     }
 }
-
-Player.prototype.play = function(player){
-    this.player.isPlaying = true;
-}
