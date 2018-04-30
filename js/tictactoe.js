@@ -8,23 +8,7 @@ const box = document.querySelector('.box');
 const boxCollection = document.querySelectorAll('.box');
 const boardObj = [];
 let boxArray = [];
-
-// Object board
 collectionToArray(boxCollection, boxArray);
-
-let row = [];
-
-function test(el) {
-    let testValue = el.classList;
-    switch(testValue) {
-        case "box-filled-1":
-        break;
-        case "box-filled-2":
-        break;
-        default:
-        break;
-    }
-}
 
 let row1 = boxArray.slice(0,3);
 let row2 = boxArray.slice(3,6);
@@ -35,9 +19,31 @@ let col3 = [];
 let diag1 = [];
 let diag2 = [];
 
+// Object board
+
+// let row = [];
+
+// function test(el) {
+//     let testValue = el.classList;
+//     switch(testValue) {
+//         case "box-filled-1":
+//         break;
+//         case "box-filled-2":
+//         break;
+//         default:
+//         break;
+//     }
+// }
+
 // for(let i = 0; i < boxArray.length; i++) {
-//     if (i!=0 && i % 2 == 0) {
-//         console.log(i);
+//     if (i % 3 == 0) {
+//         col1.push(i);
+//     }
+//     if(i % 3 == 1) {
+//         col2.push(i);
+//     }
+//     if(i % 3 == 2) {
+//         col3.push(i);
 //     }
 //     boardObj[i] = {
 //         cell: {
@@ -47,10 +53,6 @@ let diag2 = [];
 //         }
 //     }
 // }
-
-console.log(row1);
-console.log(row2);
-console.log(row3);
 
 
 let board = new Board(boxArray);
@@ -85,8 +87,8 @@ for(let i = 0; i < boxCollection.length; i++) {
         e.target.style.backgroundImage = '';
     });
     boxCollection[i].addEventListener('click', (e) => {
-        if(!e.target.classList.item(2)){
-            board.switchPlayer(players, e);
+        if(!e.target.classList.item(1)){
+            board.updateBoard(players, e);
         } else {
             e.preventDefault();
         }

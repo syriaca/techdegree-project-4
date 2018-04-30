@@ -1,16 +1,3 @@
-/* Board properties
-> Id
-> grid,
-> MarkerType,
-> MarkerClass
-> isPlaying
-*/
-
-/* Board Method
-> Hover
-> Click
-*/
-
 function Board(boxes) {
     this.players = [];
     this.boxes = boxes;
@@ -37,8 +24,18 @@ Board.prototype.updatePlayers = function() {
     }
 };
 
-Board.prototype.switchPlayer = function(players, e) {
+Board.prototype.updateBoard = function(players, e) {
     this.addMark(players, e);
+    let winRow = [];
+
+    function testRow(arr){
+        for(let i = 0; i < arr.length; i++) {            
+            winRow.push(arr[i].getAttribute("data-marker"));            
+        }
+        console.log(winRow);
+        if(winRow.every( (val, i, arr) => val === arr[0] ));
+    }
+    testRow(row1);
     this.stopPlaying()    
     this.startPlaying();
 };
@@ -48,9 +45,8 @@ Board.prototype.startPlaying = function() {
     let currentPlayer = players[this.currentPlayerIndex];
     currentPlayer.isPlaying = true;
     currentPlayer.id.classList.add("active");
-
-    console.log("play");
-    console.log(currentPlayer);
+    // console.log("play");
+    // console.log(currentPlayer);
 };
 
 Board.prototype.stopPlaying = function() {
@@ -61,9 +57,8 @@ Board.prototype.stopPlaying = function() {
     } else {
         currentPlayer.id.classList.add("active");
     }
-
-    console.log("stop");
-    console.log(currentPlayer);
+    // console.log("stop");
+    // console.log(currentPlayer);
 };
 
 Board.prototype.addMark = function(players, e) {
@@ -74,7 +69,7 @@ Board.prototype.addMark = function(players, e) {
 };
 
 Board.prototype.mouseOver = function(players, e) {
-    if(!e.target.classList.item(2)) {
+    if(!e.target.classList.item(1)) {
         let currentPlayer = players[this.currentPlayerIndex];
         let playerMarker = currentPlayer.markerType;
         e.target.style.backgroundImage = 'url("img/'+playerMarker+'.svg")';
