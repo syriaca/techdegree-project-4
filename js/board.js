@@ -8,15 +8,6 @@ Board.prototype.addPlayer = function(player) {
     this.players.push(player);
 };
 
-Board.prototype.updateBoxesStatus = function(e) {
-    let currentPlayer = players[this.currentPlayerIndex];
-    for(let i = 0; i < this.boxes.length; i++) {
-        if(e.target === this.boxes[i].element) {
-            console.log("ok")
-        }
-    }
-}
-
 Board.prototype.updatePlayers = function() {
     this.currentPlayerIndex++;
     if(this.currentPlayerIndex === this.players.length) {
@@ -26,16 +17,6 @@ Board.prototype.updatePlayers = function() {
 
 Board.prototype.updateBoard = function(players, e) {
     this.addMark(players, e);
-    let winRow = [];
-
-    function testRow(arr){
-        for(let i = 0; i < arr.length; i++) {            
-            winRow.push(arr[i].getAttribute("data-marker"));            
-        }
-        console.log(winRow);
-        if(winRow.every( (val, i, arr) => val === arr[0] ));
-    }
-    testRow(row1);
     this.stopPlaying()    
     this.startPlaying();
 };
@@ -63,10 +44,34 @@ Board.prototype.stopPlaying = function() {
 
 Board.prototype.addMark = function(players, e) {
     let currentPlayer = players[this.currentPlayerIndex];
-    e.target.classList.add(currentPlayer.markerClass);
-    e.target.setAttribute('data-marker', currentPlayer.markerType);
-    board.updateBoxesStatus(e)
+    let currentPlayerMarkerClass = currentPlayer.markerClass;
+    let currentPlayerMarkerType = currentPlayer.markerType;
+    e.target.classList.add(currentPlayerMarkerClass);
+    e.target.setAttribute('data-marker', currentPlayerMarkerType);
+    this.winTest(currentPlayer, e)
 };
+
+Board.prototype.winTest = function(currentPlayer, e) {
+    let winner =  false;
+    function testRow(arr){
+        let winRow = [];
+        for(let i = 0; i < arr.length; i++) {            
+            winRow.push(arr[i].getAttribute("data-marker"));
+        }
+        console.log(winRow);
+
+        if(winRow.every( (val, i, arr) => val === arr[0] && val != null )) {
+            let winner = true;
+            currentPlayer.isWinner = winner;
+            console.log(currentPlayer);
+        }
+
+    }
+    testRow(row1);
+    testRow(row2);
+    testRow(row3);
+
+}
 
 Board.prototype.mouseOver = function(players, e) {
     if(!e.target.classList.item(1)) {
