@@ -8,54 +8,32 @@ const box = document.querySelector('.box');
 const boxCollection = document.querySelectorAll('.box');
 const boardObj = [];
 let boxArray = [];
+let isWinner = false;
+let gameEnd = false;
+
 collectionToArray(boxCollection, boxArray);
 
-let row1 = boxArray.slice(0,3);
-let row2 = boxArray.slice(3,6);
-let row3 = boxArray.slice(6,9);
+let row1 = [];
+let row2 = [];
+let row3 = [];
 let col1 = [];
 let col2 = [];
 let col3 = [];
 let diag1 = [];
 let diag2 = [];
 
-// Object board
+row1.push(boxArray[0], boxArray[1], boxArray[2]);
+row2.push(boxArray[3], boxArray[4], boxArray[5]);
+row3.push(boxArray[6], boxArray[7], boxArray[8]);
+col1.push(boxArray[0], boxArray[3], boxArray[6]);
+col2.push(boxArray[1], boxArray[4], boxArray[7]);
+col3.push(boxArray[2], boxArray[5], boxArray[8]);
+diag1.push(boxArray[0], boxArray[4], boxArray[8]);
+diag2.push(boxArray[2], boxArray[4], boxArray[6]);
 
-// let row = [];
+boardObj.push(row1, row2, row3, col1, col2, col3, diag1, diag2);
 
-// function test(el) {
-//     let testValue = el.classList;
-//     switch(testValue) {
-//         case "box-filled-1":
-//         break;
-//         case "box-filled-2":
-//         break;
-//         default:
-//         break;
-//     }
-// }
-
-// for(let i = 0; i < boxArray.length; i++) {
-//     if (i % 3 == 0) {
-//         col1.push(i);
-//     }
-//     if(i % 3 == 1) {
-//         col2.push(i);
-//     }
-//     if(i % 3 == 2) {
-//         col3.push(i);
-//     }
-//     boardObj[i] = {
-//         cell: {
-//             element: boxArray[i],
-//             isFilled: false,
-//             marker: ""
-//         }
-//     }
-// }
-
-
-let board = new Board(boxArray);
+let board = new Board();
 let playerO= new Player(player1, "Jean-Yves", "O", "box-filled-1", true);
 let playerX = new Player(player2, "Théo", "X", "box-filled-2", false);
 
@@ -75,8 +53,7 @@ let players = board.players;
     startGameButton.addEventListener('click', (e) => {
         elementDisplay(startScreen, 'none');
         elementDisplay(boardScreen, 'block');
-    });   
-    
+    });       
 }());
 
 for(let i = 0; i < boxCollection.length; i++) {
