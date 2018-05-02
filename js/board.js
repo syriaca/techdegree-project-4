@@ -1,7 +1,6 @@
-function Board(boxes) {
+function Board() {
     this.players = [];
-    this.equalityArray = [];
-    this.boxes = boxes;
+    this.equalityObject = [];
     this.currentPlayerIndex = 0;
     this.drawGame = true;
     this.hasWinner = false;
@@ -51,7 +50,6 @@ Board.prototype.stopPlaying = function() {
     }
 };
 
-
 Board.prototype.addMark = function(players, e) {
     let currentPlayer = players[this.currentPlayerIndex];
     let currentPlayerMarkerClass = currentPlayer.markerClass;
@@ -69,20 +67,56 @@ Board.prototype.mouseOver = function(players, e) {
     }
 };
 
-Board.prototype.testEquality = function(arr) {
-    this.equalityArray = [];
+// Board.prototype.testEquality = function(arr) {
+//     this.equalityObject = [];
+//     let currentPlayer = players[this.currentPlayerIndex];
+
+//     for(let i = 0; i < arr.length; i++) {            
+//         this.equalityObject.push(arr[i].getAttribute("data-marker"));
+//     }
+
+//     if(this.equalityObject.every( (val, i, arr) => val === arr[0] && val != null && val != " ")) {
+//         this.drawGame = false;
+//         this.hasWinner = true;
+//         this.winner = currentPlayer;
+//         this.exitGame(currentPlayer); 
+//     }
+    
+//     if(boxArray.every((val, i, arr) => val.hasAttribute("data-marker"))) {
+//         this.exitGame(); 
+//     }
+// }
+
+// Board.prototype.winTest = function() {
+//     // this.testEquality(row1);
+//     // this.testEquality(row2);
+//     // this.testEquality(row3);
+//     // this.testEquality(col1);
+//     // this.testEquality(col2);
+//     // this.testEquality(col3);
+//     // this.testEquality(diag1);
+//     // this.testEquality(diag2);
+// }
+
+Board.prototype.testEquality = function(obj) {
+    this.equalityObject = {};
     let currentPlayer = players[this.currentPlayerIndex];
 
-    for(let i = 0; i < arr.length; i++) {            
-        this.equalityArray.push(arr[i].getAttribute("data-marker"));
+    console.log(obj);
+
+    for(key in obj) {
+        var arr = obj[key];
+        for(let i = 0; i < arr.length; i++) {         
+            obj[key][i].getAttribute("data-marker");
+        }
     }
 
-    if(this.equalityArray.every( (val, i, arr) => val === arr[0] && val != null && val != " ")) {
-        this.drawGame = false;
-        this.hasWinner = true;
-        this.winner = currentPlayer;
-        this.exitGame(currentPlayer); 
-    }
+    // if(this.equalityObject.every( (val, i, obj) => val === obj[0] && val != null && val != " ")) {
+    //     this.drawGame = false;
+    //     this.hasWinner = true;
+    //     this.winner = currentPlayer;
+    //     this.exitGame(currentPlayer); 
+    // }
     
     if(boxArray.every((val, i, arr) => val.hasAttribute("data-marker"))) {
         this.exitGame(); 
@@ -90,14 +124,7 @@ Board.prototype.testEquality = function(arr) {
 }
 
 Board.prototype.winTest = function() {
-    this.testEquality(row1);
-    this.testEquality(row2);
-    this.testEquality(row3);
-    this.testEquality(col1);
-    this.testEquality(col2);
-    this.testEquality(col3);
-    this.testEquality(diag1);
-    this.testEquality(diag2);
+    this.testEquality(boardObj);
 }
 
 Board.prototype.exitGame = function(){
@@ -115,12 +142,12 @@ Board.prototype.exitGame = function(){
 Board.prototype.newGame = function(){
     elementDisplay(finishScreen, 'none');
     elementDisplay(boardScreen, 'block');
-    fillTestArrays();
+    fillWinTestArrays();
 
     if(this.winner) {finishScreen.classList.remove(this.winner.winClass);}
     this.hasWinner = false;
     this.drawGame = false;
-    this.equalityArray = [];
+    this.equalityObject = [];
     this.winner = false;
     message.textContent = '';
 

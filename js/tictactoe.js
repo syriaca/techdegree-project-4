@@ -9,19 +9,28 @@ const boxes =  document.querySelector('.boxes');
 const box = document.querySelector('.box');
 const message = document.querySelector('.message');
 const boxCollection = document.querySelectorAll('.box');
-const boardObj = [];
 let boxArray = [];
-let row1 = [];
-let row2 = [];
-let row3 = [];
-let col1 = [];
-let col2 = [];
-let col3 = [];
-let diag1 = [];
-let diag2 = [];
-
 collectionToArray(boxCollection, boxArray);
-fillTestArrays();
+
+let boardObj = {
+    row1: [boxArray[0], boxArray[1], boxArray[2]],
+    row2: [boxArray[3], boxArray[4], boxArray[5]],
+    row3: [boxArray[6], boxArray[7], boxArray[8]],
+    col1: [boxArray[0], boxArray[3], boxArray[6]],
+    col2: [boxArray[1], boxArray[4], boxArray[7]],
+    col3: [boxArray[2], boxArray[5], boxArray[8]],
+    diag1: [boxArray[0], boxArray[4], boxArray[8]],
+    diag2: [boxArray[2], boxArray[4], boxArray[6]]
+};
+
+// let row1 = [];
+// let row2 = [];
+// let row3 = [];
+// let col1 = [];
+// let col2 = [];
+// let col3 = [];
+// let diag1 = [];
+// let diag2 = [];
 
 let board = new Board();
 let playerO= new Player(player1, "Jean-Yves", "O", "box-filled-1", true, "screen-win-one");
@@ -34,7 +43,8 @@ let players = board.players;
 
 (function(){
     // Event listener on document load
-    document.addEventListener('DOMContentLoaded', (e) => {
+    document.addEventListener('DOMContentLoaded', (e) => {        
+        // fillWinTestArrays();
         elementDisplay(startScreen, 'block');
         elementDisplay(boardScreen, 'none');
         elementDisplay(finishScreen, 'none');
