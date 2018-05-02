@@ -7,6 +7,7 @@ const startGameButton = document.querySelector('#start .button')
 const newGameButton = document.querySelector('#finish .button')
 const boxes =  document.querySelector('.boxes');
 const box = document.querySelector('.box');
+const message = document.querySelector('.message');
 const boxCollection = document.querySelectorAll('.box');
 const boardObj = [];
 let boxArray = [];
@@ -23,7 +24,7 @@ collectionToArray(boxCollection, boxArray);
 fillTestArrays();
 
 let board = new Board();
-let playerO= new Player(player1, "Jean-Yves", "O", "box-filled-1", false, "screen-win-one");
+let playerO= new Player(player1, "Jean-Yves", "O", "box-filled-1", true, "screen-win-one");
 let playerX = new Player(player2, "Théo", "X", "box-filled-2", false, "screen-win-two");
 
 board.addPlayer(playerO);

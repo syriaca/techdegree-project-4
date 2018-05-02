@@ -8,7 +8,6 @@ function Board(boxes) {
     this.winner;
 };
 
-
 // Push players to the players Array
 Board.prototype.addPlayer = function(player) {
     this.players.push(player);
@@ -83,7 +82,9 @@ Board.prototype.testEquality = function(arr) {
         this.hasWinner = true;
         this.winner = currentPlayer;
         this.exitGame(currentPlayer); 
-    } else if(boxArray.every((val, i, arr) => val.hasAttribute("data-marker"))) {
+    }
+    
+    if(boxArray.every((val, i, arr) => val.hasAttribute("data-marker"))) {
         this.exitGame(); 
     }
 }
@@ -104,10 +105,10 @@ Board.prototype.exitGame = function(){
     elementDisplay(finishScreen, 'block');
     if(this.winner) {
         finishScreen.classList.add(this.winner.winClass);
-        console.log(this.winner);
-        console.log(this.equalityArray);
+        message.textContent = this.winner ? this.winner.name + ' win !': '' ;
     } else {
-        console.log("draw");
+        finishScreen.classList.add("screen-win-tie");
+        message.textContent = "It's a Tie!";        
     }
 }
 
@@ -116,17 +117,18 @@ Board.prototype.newGame = function(){
     elementDisplay(boardScreen, 'block');
     fillTestArrays();
 
-    finishScreen.classList.remove(this.winner.winClass);
+    if(this.winner) {finishScreen.classList.remove(this.winner.winClass);}
     this.hasWinner = false;
     this.drawGame = false;
     this.equalityArray = [];
     this.winner = false;
+    message.textContent = '';
 
     for(let i = 0; i < players.length; i++) {
         players[i].isWinner = false;
     }
     for(let i = 0; i < boxArray.length; i++) {            
-        boxArray[i].setAttribute("data-marker", " ");
+        boxArray[i].removeAttribute("data-marker");
         boxArray[i].classList.remove("box-filled-1","box-filled-2");
     }
 }
