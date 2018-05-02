@@ -1,7 +1,11 @@
 function Board(boxes) {
     this.players = [];
+    this.equalityArray = [];
     this.boxes = boxes;
     this.currentPlayerIndex = 0;
+    this.drawGame = true;
+    this.hasWinner = false;
+    this.winner;
 };
 
 
@@ -48,6 +52,7 @@ Board.prototype.stopPlaying = function() {
     }
 };
 
+
 Board.prototype.addMark = function(players, e) {
     let currentPlayer = players[this.currentPlayerIndex];
     let currentPlayerMarkerClass = currentPlayer.markerClass;
@@ -56,22 +61,30 @@ Board.prototype.addMark = function(players, e) {
     e.target.setAttribute('data-marker', currentPlayerMarkerType);
 };
 
+// Add / remove player marker on mousein out on cell background
+Board.prototype.mouseOver = function(players, e) {
+    if(!e.target.classList.item(1)) {
+        let currentPlayer = players[this.currentPlayerIndex];
+        let playerMarker = currentPlayer.markerType;
+        e.target.style.backgroundImage = 'url("img/'+playerMarker+'.svg")';
+    }
+};
+
 Board.prototype.testEquality = function(arr) {
-    let equalityArray = [];
+    this.equalityArray = [];
     let currentPlayer = players[this.currentPlayerIndex];
 
     for(let i = 0; i < arr.length; i++) {            
-        equalityArray.push(arr[i].getAttribute("data-marker"));
+        this.equalityArray.push(arr[i].getAttribute("data-marker"));
     }
-    console.log(equalityArray);
 
-    if(equalityArray.every( (val, i, arr) => val === arr[0] && val != null )) {
-        isWinner = true;
-        currentPlayer.isWinner = isWinner;
-        gameEnd = true;
-        if (gameEnd) {
-            console.log(currentPlayer);
-        }
+    if(this.equalityArray.every( (val, i, arr) => val === arr[0] && val != null && val != " ")) {
+        this.drawGame = false;
+        this.hasWinner = true;
+        this.winner = currentPlayer;
+        this.exitGame(currentPlayer); 
+    } else if(boxArray.every((val, i, arr) => val.hasAttribute("data-marker"))) {
+        this.exitGame(); 
     }
 }
 
@@ -86,13 +99,34 @@ Board.prototype.winTest = function() {
     this.testEquality(diag2);
 }
 
-
-// Add / remove player marker on mousein out on cell background
-Board.prototype.mouseOver = function(players, e) {
-    if(!e.target.classList.item(1)) {
-        let currentPlayer = players[this.currentPlayerIndex];
-        let playerMarker = currentPlayer.markerType;
-        e.target.style.backgroundImage = 'url("img/'+playerMarker+'.svg")';
+Board.prototype.exitGame = function(){
+    elementDisplay(boardScreen, 'none');
+    elementDisplay(finishScreen, 'block');
+    if(this.winner) {
+        finishScreen.classList.add(this.winner.winClass);
+        console.log(this.winner);
+        console.log(this.equalityArray);
+    } else {
+        console.log("draw");
     }
-};
+}
 
+Board.prototype.newGame = function(){
+    elementDisplay(finishScreen, 'none');
+    elementDisplay(boardScreen, 'block');
+    fillTestArrays();
+
+    finishScreen.classList.remove(this.winner.winClass);
+    this.hasWinner = false;
+    this.drawGame = false;
+    this.equalityArray = [];
+    this.winner = false;
+
+    for(let i = 0; i < players.length; i++) {
+        players[i].isWinner = false;
+    }
+    for(let i = 0; i < boxArray.length; i++) {            
+        boxArray[i].setAttribute("data-marker", " ");
+        boxArray[i].classList.remove("box-filled-1","box-filled-2");
+    }
+}

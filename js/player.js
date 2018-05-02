@@ -1,10 +1,10 @@
-function Player(id, name, markerType, markerClass, isPlaying, isWinner) {
+function Player(id, name, markerType, markerClass, isPlaying, winClass) {
     this.id = id,
     this.name = name,
     this.markerType = markerType,
     this.markerClass = markerClass,
     this.isPlaying = isPlaying,
-    this.isWinner = false
+    this.winClass = winClass
     if(this.isPlaying) {
         this.id.classList.add("active");
     }
