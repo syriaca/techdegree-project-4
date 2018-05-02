@@ -24,8 +24,8 @@ collectionToArray(boxCollection, boxArray);
 fillTestArrays();
 
 let board = new Board();
-let playerO= new Player(player1, "Jean-Yves", "O", "box-filled-1", true, "screen-win-one");
-let playerX = new Player(player2, "Théo", "X", "box-filled-2", false, "screen-win-two");
+let playerO= new Player(player1, "Player 1", "O", "box-filled-1", true, "screen-win-one");
+let playerX = new Player(player2, "Player 2", "X", "box-filled-2", false, "screen-win-two");
 
 board.addPlayer(playerO);
 board.addPlayer(playerX);
