@@ -34,6 +34,7 @@ Board.prototype.switchPlayer = function(players, e) {
     this.startPlaying();
 }
 
+// Method that set everything for the current Player to start playing
 Board.prototype.startPlaying = function() {
     this.updatePlayersIndex();
     let currentPlayer = players[this.currentPlayerIndex];
@@ -41,6 +42,7 @@ Board.prototype.startPlaying = function() {
     currentPlayer.id.classList.add("active");
 };
 
+// Method that set everything for the current Player to stop playing
 Board.prototype.stopPlaying = function() {
     let currentPlayer = players[this.currentPlayerIndex];
     currentPlayer.isPlaying = false;
@@ -51,7 +53,7 @@ Board.prototype.stopPlaying = function() {
     }
 };
 
-
+// Method that set mark on the board with a data-attribute
 Board.prototype.addMark = function(players, e) {
     let currentPlayer = players[this.currentPlayerIndex];
     let currentPlayerMarkerClass = currentPlayer.markerClass;
@@ -69,6 +71,8 @@ Board.prototype.mouseOver = function(players, e) {
     }
 };
 
+// Method that test equality between different marker put in data-attribute of each cells
+// Todo: improve by passing a "grid" object instead of that multidimensionnal array
 Board.prototype.testEquality = function(arr) {
     this.equalityArray = [];
     let currentPlayer = players[this.currentPlayerIndex];
@@ -77,18 +81,21 @@ Board.prototype.testEquality = function(arr) {
         this.equalityArray.push(arr[i].getAttribute("data-marker"));
     }
 
+    // If all elements currently test array are equals, not null and not empty, we got a winner and exit game
     if(this.equalityArray.every( (val, i, arr) => val === arr[0] && val != null && val != " ")) {
         this.drawGame = false;
         this.hasWinner = true;
         this.winner = currentPlayer;
-        this.exitGame(currentPlayer); 
+        this.finishGame(currentPlayer); 
     }
     
+    // If all elements have data marker (but do not pass the previous test above), we exit game, and that's a tie game
     if(boxArray.every((val, i, arr) => val.hasAttribute("data-marker"))) {
-        this.exitGame(); 
+        this.finishGame(); 
     }
 }
 
+// Set of equality test to determine if the actual player win or if that's a tie
 Board.prototype.winTest = function() {
     this.testEquality(row1);
     this.testEquality(row2);
@@ -100,7 +107,8 @@ Board.prototype.winTest = function() {
     this.testEquality(diag2);
 }
 
-Board.prototype.exitGame = function(){
+// Method to finish the game
+Board.prototype.finishGame = function(){
     elementDisplay(boardScreen, 'none');
     elementDisplay(finishScreen, 'block');
     if(this.winner) {
@@ -112,7 +120,8 @@ Board.prototype.exitGame = function(){
     }
 }
 
-Board.prototype.newGame = function(){
+// Method to start a new game
+Board.prototype.startNewGame = function(){
     elementDisplay(finishScreen, 'none');
     elementDisplay(boardScreen, 'block');
     fillTestArrays();

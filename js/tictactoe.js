@@ -47,18 +47,19 @@ let players = board.players;
     });
     
     newGameButton.addEventListener('click', (e) => {
-        board.newGame();
+        board.startNewGame();
     });
 }());
 
-for(let i = 0; i < boxCollection.length; i++) {
-    boxCollection[i].addEventListener('mouseover', (e) => {
+// Add Event listener on boxes element
+for(let i = 0; i < boxArray.length; i++) {
+    boxArray[i].addEventListener('mouseover', (e) => {
         board.mouseOver(players, e);
     });
-    boxCollection[i].addEventListener('mouseout', (e) => {
+    boxArray[i].addEventListener('mouseout', (e) => {
         e.target.style.backgroundImage = '';
     });
-    boxCollection[i].addEventListener('click', (e) => {
+    boxArray[i].addEventListener('click', (e) => {
         if(!e.target.classList.item(1)){
             board.updateBoard(players, e);
         } else {
